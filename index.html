@@ -21,7 +21,7 @@
 
     .h1 {
       text-align: center;
-      color: #fff;
+      color: rgb(0, 255, 13)
     }
 
     .p {
@@ -48,7 +48,7 @@
       height: 0;
     }
 
-    .video-wrapper iframe {
+    .video-wrapper video {
       position: absolute;
       top: 0;
       left: 0;
@@ -56,42 +56,54 @@
       height: 100%;
     }
 
+    .video-cover {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      /* Fundo preto para cobrir o vídeo */
+      cursor: pointer;
+      z-index: 1;
+      /* Garantir que a capa esteja acima do vídeo */
+    }
+
+    /* Novo estilo para o .play-button */
+    .play-button {
+      color: #fff;
+      display: flex;
+      /* Usando flex para centralizar o ícone no botão */
+      justify-content: center;
+      align-items: center;
+      /* Restante dos seus estilos para .play-button */
+    }
+
     button {
       background-color: #4CAF50;
-      /* Cor de fundo do botão */
       color: white;
-      /* Cor do texto */
       padding: 14px 20px;
-      /* Espaçamento interno do botão */
       margin: 10px 0;
-      /* Margem externa */
       border: none;
-      /* Sem borda */
       border-radius: 4px;
-      /* Bordas arredondadas */
       cursor: pointer;
-      /* O cursor parecerá um ponteiro quando passar sobre o botão */
       transition: all 0.3s ease 0s;
-      /* Suaviza a transição de estados do botão */
     }
 
     button:hover {
       background-color: #45a049;
-      /* Cor de fundo do botão quando o mouse está em cima */
-      /* Outras propriedades como sombra também podem ser adicionadas aqui */
+
     }
 
-    /* Focando no botão com o teclado (acessibilidade) */
     button:focus {
       outline: none;
-      /* Remove o contorno padrão do navegador */
-      /* Aqui você pode adicionar um estilo de contorno personalizado se necessário */
     }
 
-    /* Estilo do botão quando estiver ativo/clicado */
     button:active {
       transform: translateY(2px);
-      /* Empurra o botão para baixo (simula pressionamento) */
     }
 
 
@@ -109,19 +121,23 @@
     <h1 class="h1">Seu Jardim Belo Como Nunca Visto</h1>
     <p class="p">aprenda a cuidar das suas plantas com um carinho para deixa-las perfeitas.</p>
 
-    <!-- <div class="video-wrapper">
+    <div class="video-wrapper">
+      <div class="video-cover" id="videoCover" onclick="playPauseVideo();">
+        <div class="play-button" id="playButton">▶ Play</div> <!-- Ícone de Play -->
+      </div>
+      <video id="meuVideo" onclick="playPauseVideo();">
+        <source src="./vsl_jardim_magico.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos.
+      </video>
+    </div>
 
-      <iframe src="https://www.youtube.com/embed/GLKDo13920k" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-    </div> -->
 
 
-    <div class="button">
+    <div class="button" id="botaoComprar" style="display:none;">
       <a href="https://pay.kiwify.com.br/JcxoCVj">
         <button>Clique-me!</button>
       </a>
-    </div>
+    </div>>
 
     <!-- Comentários do Facebook -->
     <div id="fb-root"></div>
@@ -130,6 +146,34 @@
     <div class="fb-comments" data-href="YOUR_WEBSITE_URL" data-width="" data-numposts="5"></div>
   </div>
 
+  <script>
+    // JavaScript para controlar o vídeo e o aparecimento do botão
+    function playPauseVideo() {
+      var video = document.getElementById('meuVideo');
+      var cover = document.getElementById('videoCover');
+
+      if (video.paused || video.ended) {
+        video.play();
+        cover.style.display = 'none'; // Esconde a capa e o botão play
+        showButtonAfterTime(260); // Chama a função para mostrar o botão depois de 4 minutos e 20 segundos
+      } else {
+        video.pause();
+        cover.style.display = 'flex'; // Mostra a capa e o botão play
+      }
+    }
+
+    function showButtonAfterTime(seconds) {
+      setTimeout(function () {
+        document.getElementById('botaoComprar').style.display = 'block';
+      }, seconds * 1000); // Converte segundos em milissegundos
+    }
+
+    // Evento que verifica quando o vídeo é pausado para mostrar o botão play
+    document.getElementById('meuVideo').addEventListener('pause', function () {
+      var cover = document.getElementById('videoCover');
+      cover.style.display = 'flex'; // Mostra a capa e o botão play quando o vídeo é pausado
+    });
+  </script>
 </body>
 
 </html>
